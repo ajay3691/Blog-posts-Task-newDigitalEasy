@@ -1,4 +1,3 @@
-// CreatePost.jsx
 
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
@@ -9,7 +8,7 @@ const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
-  const [imageFile, setImageFile] = useState(null); // New state for file
+  const [imageFile, setImageFile] = useState(null); 
   const [isPrivate, setIsPrivate] = useState(false);
   const [token] = useContext(store);
   const navigate = useNavigate();
@@ -40,10 +39,9 @@ const CreatePost = () => {
   };
   
   
-   // Added handleImageUpload function
    const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    setImageFile(file); // Set the file in the state
+    setImageFile(file); 
     setImage(URL.createObjectURL(file));
   };
 

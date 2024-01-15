@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import './AdminDashboard.css'; // Import styles from UserPosts
+import './AdminDashboard.css'; 
 import { store } from '../App';
 
 const AdminDashboard = () => {
@@ -11,13 +11,13 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useContext(store);
   const navigate = useNavigate();
-  const postsPerPage = 8;  // Define postsPerPage here
+  const postsPerPage = 8;  
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUserPosts, setSelectedUserPosts] = useState([]);
   const [hoveredUserId, setHoveredUserId] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null);
-  const [currentUserPage, setCurrentUserPage] = useState(1); // Add currentUserPage state
+  const [currentUserPage, setCurrentUserPage] = useState(1); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +31,6 @@ const AdminDashboard = () => {
           axios.get('https://blog-posts-task-new-digital-easy.vercel.app/user/users'),
         ]);
 
-        // Fetch user details for each post
         const postsWithUserDetails = await Promise.all(
           postsResponse.data.map(async (post) => {
             const userResponse = await axios.get(`https://blog-posts-task-new-digital-easy.vercel.app/user/users/${post.userId}`);
@@ -98,21 +97,18 @@ const AdminDashboard = () => {
         },
       });
 
-      // Fetch user details for the selected user
       const userResponse = await axios.get(`https://blog-posts-task-new-digital-easy.vercel.app/user/users/${userId}`);
       const userDetails = userResponse.data;
 
-      // Update selectedUserPosts with user details
       const postsWithUserDetails = response.data.map((post) => ({
         ...post,
         userDetails,
       }));
 
       setSelectedUserPosts(postsWithUserDetails);
-      setSelectedUserId(userId); // Set the selectedUserId
+      setSelectedUserId(userId); 
       setHoveredUserId(userId);
 
-      // Reset to the first page when a new user is selected
       setCurrentUserPage(1);
     } catch (error) {
       console.error('Error fetching user posts:', error);
@@ -132,7 +128,6 @@ const AdminDashboard = () => {
     <div className="container-fluid" style={{ marginTop: '6rem' }}>
       <div className="row">
         <div className="col-md-2">
-          {/* User List with Search Bar */}
           <div>
             <h3>User List:</h3>
             <input
@@ -177,7 +172,6 @@ const AdminDashboard = () => {
                     <p>User Name: {selectedUserPosts[0].userDetails.name}</p>
                   </div>
                   <div className="admin-posts-container">
-                    {/* Display posts of the selected user */}
                     {currentUserPosts.map((post, index) => (
                       <div key={post._id} className={`admin-post-card ${index % 2 === 0 ? 'even-post' : 'odd-post'}`}>
                         <div className="admin-post-details">

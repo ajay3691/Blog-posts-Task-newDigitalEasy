@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useState, useContext } from 'react';
 import { store } from '../App';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 
 const Login = () => {
-    const navigate = useNavigate(); // Initialize navigate
+    const navigate = useNavigate(); 
     const [token, setToken] = useContext(store);
     const [data, setData] = useState({
         email: "",
@@ -22,16 +22,13 @@ const Login = () => {
         axios.post("https://blog-posts-task-new-digital-easy.vercel.app/user/login", data)
             .then((resp) => {
                 setToken(resp.data.token);
-                // Use navigate to redirect to '/myprofile' on successful login
                 navigate('/myprofile');
             })
             .catch(() => {
-                // Handle login error here if needed
             });
     };
 
     if (token) {
-        // You can remove this part as navigation is handled within submitHandler
         return null;
     }
 

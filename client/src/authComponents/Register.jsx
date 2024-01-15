@@ -10,7 +10,7 @@ const RegisterPage = () => {
         mobile: '',
         password: '',
         role: '',
-        secretCode: '', // Change the field name to match the server-side code
+        secretCode: '',
     });
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
@@ -40,7 +40,6 @@ const RegisterPage = () => {
             }, 3000);
         } catch (error) {
             if (error.response?.data?.err) {
-                // Check for specific error messages
                 if (error.response.data.err.includes('User already exists with this email')) {
                     setAlertMessage('Registration failed: User already exists with this email.');
                 } else if (error.response.data.err.includes('Mobile number is already registered')) {
@@ -48,11 +47,9 @@ const RegisterPage = () => {
                 } else if (error.response.data.err.includes('Invalid secret code for admin registration')) {
                     setAlertMessage('Registration failed: Invalid secret code for admin registration.');
                 } else {
-                    // Handle other errors
                     setAlertMessage(`Registration failed: ${error.response.data.err}`);
                 }
             } else {
-                // Handle other errors without a specific error message
                 console.error('Registration failed:', error.response?.data?.err || 'Unknown error');
                 setAlertMessage('Registration failed. Please check your information and try again.');
             }
@@ -110,7 +107,6 @@ const RegisterPage = () => {
                         <h6>----------</h6>
                     </form>
 
-                    {/* Alert for success or error */}
                     {showAlert && (
                         <div className={`alert ${alertMessage.includes('successful') ? 'alert-success' : 'alert-danger'} mt-3`} role="alert">
                             {alertMessage}

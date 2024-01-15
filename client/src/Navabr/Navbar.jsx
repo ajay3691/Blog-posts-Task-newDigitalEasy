@@ -1,15 +1,14 @@
-// NavigationBar.jsx
+
 import React, { useContext } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { store } from '../App';
-import './Nav.css'; // Import your custom CSS file
+import './Nav.css'; 
 
 const NavigationBar = () => {
   const [token, setToken] = useContext(store);
 
   const handleLogout = () => {
-    // Perform logout logic here (clear token, etc.)
     setToken(null);
   };
 

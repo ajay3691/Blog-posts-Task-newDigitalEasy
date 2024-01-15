@@ -11,7 +11,7 @@ const UpdatePost = () => {
     image: '',
     isPrivate: false,
   });
-  const [imageFile, setImageFile] = useState(null); // New state for file
+  const [imageFile, setImageFile] = useState(null); 
   const [token] = useContext(store);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -63,11 +63,10 @@ const UpdatePost = () => {
     setPost({ ...post, [event.target.name]: event.target.value });
   };
 
-  // Added handleImageUpload function
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    setImageFile(file); // Set the file in the state
-    setPost({ ...post, image: URL.createObjectURL(file) }); // Set image URL in the state
+    setImageFile(file); 
+    setPost({ ...post, image: URL.createObjectURL(file) }); 
   };
 
   const handleSubmit = async (e) => {

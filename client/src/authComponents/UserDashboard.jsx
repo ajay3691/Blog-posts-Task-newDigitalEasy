@@ -4,7 +4,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { store } from '../App';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import './AdminDashboard.css';
-// ... (import statements)
 
 const UserDashboard = () => {
   const [posts, setPosts] = useState([]);

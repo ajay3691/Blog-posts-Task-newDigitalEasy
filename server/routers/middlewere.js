@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-const ADMIN_SECRET_KEY = 'abc'; // Replace with your actual admin secret key
-const USER_SECRET_KEY = 'xyz'; // Replace with your actual user secret key
+const ADMIN_SECRET_KEY = 'abc'; 
+const USER_SECRET_KEY = 'xyz'; 
 
 export const authenticateToken = (req, res, next) => {
     try {
@@ -12,16 +12,13 @@ export const authenticateToken = (req, res, next) => {
             return res.status(401).json({ message: 'Unauthorized: No token provided' });
         }
 
-        // Decode the JWT token to inspect its content
         const decodedToken = jwt.decode(token);
         console.log('Token Content:', decodedToken);
 
-        // Verify and decode the JWT token
         let decoded;
         let secretKey;
 
         if (decodedToken && decodedToken.user && decodedToken.user.role) {
-            // Choose secret key based on the user's role
             secretKey =
                 decodedToken.user.role === 'admin' ? ADMIN_SECRET_KEY : USER_SECRET_KEY;
 
@@ -33,13 +30,12 @@ export const authenticateToken = (req, res, next) => {
                 return res.status(401).json({ message: 'Unauthorized: Invalid token' });
             }
 
-            // Attach user data from the payload to req.user
             req.user = {
                 id: decoded.user.id,
                 role: decoded.user.role,
             };
 
-            next(); // Continue to the next middleware or route
+            next(); 
         } else {
             console.log('Invalid Token Payload:', decodedToken);
             return res.status(401).json({ message: 'Unauthorized: Invalid token payload' });
