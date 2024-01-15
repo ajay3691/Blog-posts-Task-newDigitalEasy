@@ -31,7 +31,7 @@ const RegisterPage = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:5000/user/register', formData);
+            const response = await axios.post('https://blog-posts-task-new-digital-easy.vercel.app/user/register', formData);
             console.log(response.data);
             setShowAlert(true);
             setAlertMessage('Registration successful! Redirecting to login...');

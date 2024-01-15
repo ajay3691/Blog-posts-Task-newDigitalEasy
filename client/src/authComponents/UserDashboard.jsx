@@ -17,7 +17,7 @@ const UserDashboard = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/post/user', {
+        const response = await axios.get('https://blog-posts-task-new-digital-easy.vercel.app/post/user', {
           headers: {
             'x-token': token,
           },
@@ -52,7 +52,7 @@ const UserDashboard = () => {
 
   const handleDelete = async (postId) => {
     try {
-      await axios.delete(`http://localhost:5000/post/${postId}`, {
+      await axios.delete(`https://blog-posts-task-new-digital-easy.vercel.app/post/${postId}`, {
         headers: {
           'x-token': token,
         },

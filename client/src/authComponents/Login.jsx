@@ -19,7 +19,7 @@ const Login = () => {
         event.preventDefault();
         console.log(data);
 
-        axios.post("http://localhost:5000/user/login", data)
+        axios.post("https://blog-posts-task-new-digital-easy.vercel.app/user/login", data)
             .then((resp) => {
                 setToken(resp.data.token);
                 // Use navigate to redirect to '/myprofile' on successful login

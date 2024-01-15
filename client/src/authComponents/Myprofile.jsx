@@ -13,7 +13,7 @@ const Myprofile = () => {
             navigate('/login');
         } else {
             // Fetch data for admin role using 'x-token'
-            axios.get('http://localhost:5000/user/adminDashboard', {
+            axios.get('https://blog-posts-task-new-digital-easy.vercel.app/user/adminDashboard', {
                 headers: { 'x-token': token }
             })
                 .then((resp) => {
@@ -33,7 +33,7 @@ const Myprofile = () => {
             navigate('/login');
         } else {
             // Fetch data for teacher role using 'y-token'
-            axios.get('http://localhost:5000/user/userDashboard', {
+            axios.get('https://blog-posts-task-new-digital-easy.vercel.app/user/userDashboard', {
                 headers: { 'x-token': token }
             })
                 .then((resp) => {

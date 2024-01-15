@@ -23,18 +23,18 @@ const AdminDashboard = () => {
     const fetchData = async () => {
       try {
         const [postsResponse, usersResponse] = await Promise.all([
-          axios.get('http://localhost:5000/post/posts', {
+          axios.get('https://blog-posts-task-new-digital-easy.vercel.app/post/posts', {
             headers: {
               'x-token': token,
             },
           }),
-          axios.get('http://localhost:5000/user/users'),
+          axios.get('https://blog-posts-task-new-digital-easy.vercel.app/user/users'),
         ]);
 
         // Fetch user details for each post
         const postsWithUserDetails = await Promise.all(
           postsResponse.data.map(async (post) => {
-            const userResponse = await axios.get(`http://localhost:5000/user/users/${post.userId}`);
+            const userResponse = await axios.get(`https://blog-posts-task-new-digital-easy.vercel.app/user/users/${post.userId}`);
             const userDetails = userResponse.data;
 
             return {
@@ -78,7 +78,7 @@ const AdminDashboard = () => {
 
   const handleDelete = async (postId) => {
     try {
-      await axios.delete(`http://localhost:5000/post/${postId}`, {
+      await axios.delete(`https://blog-posts-task-new-digital-easy.vercel.app/post/${postId}`, {
         headers: {
           'x-token': token,
         },
@@ -92,14 +92,14 @@ const AdminDashboard = () => {
 
   const handleUserClick = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/post/user/${userId}`, {
+      const response = await axios.get(`https://blog-posts-task-new-digital-easy.vercel.app/user/${userId}`, {
         headers: {
           'x-token': token,
         },
       });
 
       // Fetch user details for the selected user
-      const userResponse = await axios.get(`http://localhost:5000/user/users/${userId}`);
+      const userResponse = await axios.get(`https://blog-posts-task-new-digital-easy.vercel.app/user/users/${userId}`);
       const userDetails = userResponse.data;
 
       // Update selectedUserPosts with user details

@@ -25,7 +25,7 @@ const UpdatePost = () => {
           return;
         }
 
-        const response = await axios.get(`http://localhost:5000/post/${postId}`, {
+        const response = await axios.get(`https://blog-posts-task-new-digital-easy.vercel.app/post/${postId}`, {
           headers: {
             'x-token': token,
           },
@@ -75,7 +75,7 @@ const UpdatePost = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/post/${postId}`,
+        `https://blog-posts-task-new-digital-easy.vercel.app/post/${postId}`,
         {
           title: post.title,
           description: post.description,

@@ -19,7 +19,7 @@ const CreatePost = () => {
   
     try {
       const response = await axios.post(
-        'http://localhost:5000/post/create',
+        'https://blog-posts-task-new-digital-easy.vercel.app/post/create',
         {
           title,
           description,
