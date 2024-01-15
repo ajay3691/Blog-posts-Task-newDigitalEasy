@@ -17,7 +17,10 @@ UserRouter.post('/register', async (req, res) => {
     try {
         const { name, email, mobile, password, role, secretCode } = req.body;
 
-        let user = await User.findOne({ email: email });
+        // Convert email to lowercase for case-insensitive matching
+        const lowercaseEmail = email.toLowerCase();
+
+        let user = await User.findOne({ email: lowercaseEmail });
         if (user) {
             return res.status(401).json({ err: 'User already exists with this email' });
         }
@@ -29,23 +32,25 @@ UserRouter.post('/register', async (req, res) => {
         const hashedPassword = bcrypt.hashSync(password, 10);
         const newUser = new User({
             name,
-            email,
+            email: lowercaseEmail, // Store emails in lowercase
             mobile,
             password: hashedPassword,
             role: role || 'user', 
         });
+
         await newUser.save();
         res.status(200).json({ message: 'User registered successfully' });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         if (err.code === 11000 && err.keyPattern && err.keyPattern.mobile) {
             res.status(401).json({ err: 'Mobile number is already registered' });
         } else {
-            console.log(err);
+            console.error(err);
             res.status(500).json({ err: 'Internal Server Error' });
         }
     }
 });
+
 
 // User Login Route
 UserRouter.post('/login', async (req, res) => {
@@ -55,8 +60,11 @@ UserRouter.post('/login', async (req, res) => {
             return res.status(400).json({ msg: 'Invalid request format' });
         }
 
-        const user = await User.findOne({ email: email });
-        console.log('Email:', email);
+        // Convert email to lowercase for case-insensitive matching
+        const lowercaseEmail = email.toLowerCase();
+
+        const user = await User.findOne({ email: lowercaseEmail });
+
         if (user) {
             const isPasswordValid = bcrypt.compareSync(password, user.password);
 
@@ -84,7 +92,7 @@ UserRouter.post('/login', async (req, res) => {
 
                 jwt.sign(payload, secretKey, { expiresIn: '9h' }, (err, token) => {
                     if (err) {
-                        console.log(err);
+                        console.error(err);
                         res.status(500).json({ msg: 'JWT Token generation Err' });
                     }
                     res.status(200).json({ token });
@@ -96,10 +104,11 @@ UserRouter.post('/login', async (req, res) => {
             res.status(401).json({ msg: 'Email/User does not exist' });
         }
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ msg: 'An error occurred during login' });
     }
 });
+
 
 // Route to get all users
 UserRouter.get('/users', async (req, res) => {
