@@ -62,8 +62,8 @@ const RegisterPage = () => {
     };
 
     return (
-        <div className="container mt-5">
-            <h2 className="mb-4">Register</h2>
+        <div className="container" style={{ marginTop: '6rem' }}>
+        <h2 className="mb-4">Register</h2>
 
             <div className="row">
                 <div className="col-md-5">

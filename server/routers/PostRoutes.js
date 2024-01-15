@@ -89,6 +89,8 @@ router.put('/:postId', authenticateToken, async (req, res) => {
     }
 });
 
+// Route to read a particular post (for editing)
+
 // Route to delete a post
 router.delete('/:postId', authenticateToken, async (req, res) => {
     try {
@@ -140,6 +142,10 @@ router.get('/user/:userId', authenticateToken, isAdmin, async (req, res) => {
     try {
         const userId = req.params.userId;
         const userPosts = await Post.find({ userId });
+
+        // Add Cache-Control header to indicate no caching
+       // res.setHeader('Cache-Control', 'no-cache');
+
         res.json(userPosts);
     } catch (err) {
         console.error(err);
@@ -231,6 +237,11 @@ router.get('/page/:page', authenticateToken, async (req, res) => {
     }
 });
 
-
 export default router;
+
+
+
+
+
+
 

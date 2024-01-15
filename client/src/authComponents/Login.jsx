@@ -38,7 +38,7 @@ const Login = () => {
     return (
         <div>
             <center>
-                <div className="container">
+            <div className="container" style={{ marginTop: '6rem' }}>
                     <div className="row">
                         <div className="col-md-3"></div>
                         <div className="col-md-5">

@@ -1,20 +1,41 @@
-import React from 'react';
+// NavigationBar.jsx
+import React, { useContext } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { store } from '../App';
 import './Nav.css'; // Import your custom CSS file
 
 const NavigationBar = () => {
+  const [token, setToken] = useContext(store);
+
+  const handleLogout = () => {
+    // Perform logout logic here (clear token, etc.)
+    setToken(null);
+  };
+
   return (
-    <Navbar className="custom-navbar" variant="dark" expand="lg">
+    <Navbar className="custom-navbar" variant="dark" expand="lg" fixed="top">
       <Container>
-        <Navbar.Brand href="#home">Your Logo/Brand</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">Your Logo/Brand</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Link href="register">Register</Nav.Link>
-            <Nav.Link href="login">Login</Nav.Link>
-            <Nav.Link href="myprofile">My Profile</Nav.Link>
-            <Nav.Link href="userDashboard">UserDashboard</Nav.Link>
-            <Nav.Link href="adminDashboard">AdminDashboard</Nav.Link>
+          {!token ? (
+              <>
+                <Nav.Link as={Link} to="/register">Register</Nav.Link>
+                <Nav.Link as={Link} to="/login">Login</Nav.Link>
+              </>
+            ) : (
+              <>
+                {token.user && token.user.role === 'admin' && (
+                  <Nav.Link as={Link} to="/adminDashboard">Admin Dashboard</Nav.Link>
+                )}
+                {token.user && token.user.role === 'user' && (
+                  <Nav.Link as={Link} to="/userDashboard">User Dashboard</Nav.Link>
+                )}
+                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

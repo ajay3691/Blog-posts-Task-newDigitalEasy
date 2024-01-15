@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
 // userRouter.js
-import { isAdmin, isUser,authenticateToken } from './middlewere.js';
+import { isAdmin, isUser, authenticateToken } from './middlewere.js';
 
 const UserRouter = express.Router();
 
@@ -56,13 +56,13 @@ UserRouter.post('/register', async (req, res) => {
 UserRouter.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-         // Check if required fields are present
-         if (!email || !password ) {
+        // Check if required fields are present
+        if (!email || !password) {
             return res.status(400).json({ msg: 'Invalid request format' });
         }
         // Verify if email exists
 
-        const user = await User.findOne({ email: email});
+        const user = await User.findOne({ email: email });
         console.log('Email:', email);
         if (user) {
             // Verify the password
@@ -108,6 +108,35 @@ UserRouter.post('/login', async (req, res) => {
         res.status(500).json({ msg: 'An error occurred during login' });
     }
 });
+
+// Route to get all users
+UserRouter.get('/users', async (req, res) => {
+    try {
+        const users = await User.find();
+        res.json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: 'Internal Server Error', error: err.message });
+    }
+});
+
+// Route to get user details by ID
+UserRouter.get('/users/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+
+        res.json(user);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: 'Internal Server Error', error: err.message });
+    }
+});
+
 
 
 /* const ADMIN_SECRET_KEY = 'abc'; // Replace with your actual admin secret key

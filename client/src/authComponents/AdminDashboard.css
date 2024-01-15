@@ -1,129 +1,103 @@
 /* AdminDashboard.css */
 
-body {
-    margin: 0;
-    padding: 0;
+/* .container-fluid {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} */
+
+.user-posts-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+.loading-message,
+.no-posts-message {
+  text-align: center;
+  color: #555;
+}
+
+.user-posts-container {
+  overflow-y: auto;
+  max-height: calc(100vh - 120px);
+}
+
+.admin-post-card {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+      transform: scale(1.01);
   }
-  
-  .admin-dashboard-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f8f9fa;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .admin-dashboard-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #007bff;
-  }
-  
-  .admin-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .create-post-button {
-    margin-left: auto;
-  }
-  
-  .admin-posts-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    overflow-y: auto; /* Add overflow-y property to enable scrolling */
-    max-height: calc(100vh - 120px); /* Adjust max-height to fit your design */
-  }
-  
-  .admin-post-card {
-    width: 48%;
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-  
-    &:hover {
-      transform: scale(1.05);
-    }
-  }
-  
-  .admin-post-title {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .admin-post-description {
-    color: #555;
-  }
-  
-  .admin-post-image {
-    width: 100%;
-    height: auto;
-    max-height: 200px;
-    object-fit: cover;
-    margin-bottom: 10px;
-  }
-  
-  .admin-post-info {
-    font-size: 14px;
-    color: #888;
-  }
-  
-  .admin-post-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .edit-icon,
-  .delete-icon {
-    cursor: pointer;
-  }
-  
-  .admin-post-divider {
-    border-top: 1px solid #ccc;
-    margin-top: 10px;
-  }
-  
-  .admin-pagination-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .pagination {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .page-item {
-    margin: 0 5px;
-  }
-  
-  .page-link {
-    cursor: pointer;
-    padding: 8px 12px;
-    border: 1px solid #007bff;
-    color: #007bff;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease-in-out;
-  
-    &:hover {
-      background-color: #007bff;
-      color: #fff;
-    }
-  }
-  
-  .page-item.active .page-link {
-    background-color: #007bff;
-    color: #fff;
-  }
-  
+}
+
+.post-details {
+  width: 100%;
+}
+
+.admin-post-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.admin-post-description {
+  color: #555;
+}
+
+.admin-post-info {
+  font-size: 14px;
+  color: #888;
+}
+
+.admin-post-image {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+}
+/* Add these styles to AdminDashboard.css */
+.admin-post-card {
+  display: flex;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.even-post {
+  flex-direction: row-reverse;
+}
+
+.admin-post-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.admin-post-description {
+  color: #555;
+}
+
+.admin-post-image {
+  width: 25%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  margin-right: 15px; /* Adjust the margin based on your design */
+}
+
+.post-details {
+  flex: 1;
+}
+
+/* Rest of the styles remain unchanged */
+

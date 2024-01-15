@@ -16,7 +16,7 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await axios.post(
         'http://localhost:5000/post/create',
@@ -32,16 +32,16 @@ const CreatePost = () => {
           },
         }
       );
+      navigate('/userDashboard');
       alert("creted post succes fully")
-      navigate('/adminDashboard');
     } catch (error) {
       console.error('Error creating post:', error);
     }
   };
-  
-  
-   // Added handleImageUpload function
-   const handleImageUpload = (e) => {
+
+
+  // Added handleImageUpload function
+  const handleImageUpload = (e) => {
     const file = e.target.files[0];
     setImageFile(file); // Set the file in the state
     setImage(URL.createObjectURL(file));

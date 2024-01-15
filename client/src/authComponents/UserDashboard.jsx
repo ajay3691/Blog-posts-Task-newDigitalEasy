@@ -1,19 +1,18 @@
-// AdminDashboard.jsx
-
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link for navigation
+import { useNavigate, Link } from 'react-router-dom';
 import { store } from '../App';
-import { FaEdit, FaTrash } from 'react-icons/fa'; // Import FontAwesome icons
-import './AdminDashboard.css'; // Import your custom CSS file for styling
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import './AdminDashboard.css';
+// ... (import statements)
 
-const AdminDashboard = () => {
+const UserDashboard = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useContext(store);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 10; // Updated to display 10 records per page
+  const postsPerPage = 10;
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -33,7 +32,6 @@ const AdminDashboard = () => {
     };
 
     if (!token) {
-      // Redirect to '/login' if token is not available
       navigate('/login');
     } else {
       fetchPosts();
@@ -49,8 +47,7 @@ const AdminDashboard = () => {
   };
 
   const handleEdit = (postId) => {
-    // Redirect to edit page with postId
-    navigate(`/updatepost/:postId`);
+    navigate(`/updatepostu/${postId}`);
   };
 
   const handleDelete = async (postId) => {
@@ -61,7 +58,6 @@ const AdminDashboard = () => {
         },
       });
 
-      // Update posts after successful deletion
       setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
     } catch (error) {
       console.error('Error deleting post:', error);
@@ -69,25 +65,29 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="admin-dashboard-container">
+    <div className="container-flued" style={{ marginTop: '6rem' }}>
       <div className="admin-header">
-        <h2 className="admin-dashboard-title">Admin Dashboard</h2>
-        <Link to="/createpost" className="create-post-button ml-auto  btn btn-warning">Create Post</Link>
+        <h2 className="user-posts-title ml-5">User Dashboard</h2>
+        <Link to="/createpostu" className="create-post-button ml-5 btn btn-warning">
+          Create Post
+        </Link>
       </div>
       {loading ? (
-        <p>Loading posts...</p>
+        <p className="loading-message">Loading posts...</p>
       ) : (
-        <div className="admin-posts-container">
-          {currentPosts.map((post) => (
-            <div key={post._id} className="admin-post-card">
-              <h3 className="admin-post-title">{post.title}</h3>
+        <div className="user-posts-container">
+          {currentPosts.map((post, index) => (
+            <div key={post._id} className={`admin-post-card ${index % 2 === 0 ? 'even-post' : 'odd-post'}`}>
               <img src={post.image} alt={post.title} className="admin-post-image" />
-              <p className="admin-post-description">{post.description}</p>
-              <p className="admin-post-info">Posted by: {post.userId.name}</p>
-              <p className="admin-post-info">Posted on: {new Date(post.postedDate).toLocaleString()}</p>
-              <div className="admin-post-actions">
-                <FaEdit onClick={() => handleEdit(post._id)} className="edit-icon" />
-                <FaTrash onClick={() => handleDelete(post._id)} className="delete-icon" />
+              <div className="post-details">
+                <h3 className="admin-post-title">{post.title}</h3>
+                <p className="admin-post-description">{post.description}</p>
+                <p className="admin-post-info">Posted by: {post.name}</p>
+                <p className="admin-post-info">Posted on: {new Date(post.postedDate).toLocaleString()}</p>
+                <div className="admin-post-actions">
+                  <FaEdit onClick={() => handleEdit(post._id)} className="edit-icon" />
+                  <FaTrash onClick={() => handleDelete(post._id)} className="delete-icon" />
+                </div>
               </div>
               <hr className="admin-post-divider" />
             </div>
@@ -111,4 +111,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default UserDashboard;

@@ -88,10 +88,8 @@ const UpdatePost = () => {
           },
         }
       );
-      
       alert("updated succuessfully")
-      navigate('/adminDashboard');
-
+      navigate('/userDashboard');
     } catch (error) {
       console.error('Error updating post:', error);
       setError('Error updating post');
