@@ -65,7 +65,7 @@ const UserDashboard = () => {
   };
 
   return (
-    <div className="container-flued" style={{ marginTop: '6rem' }}>
+    <div className="container-flued ml-5" style={{ marginTop: '6rem' }}>
       <div className="admin-header">
         <h2 className="user-posts-title ml-5">User Dashboard</h2>
         <Link to="/createpostu" className="create-post-button ml-5 btn btn-warning">
