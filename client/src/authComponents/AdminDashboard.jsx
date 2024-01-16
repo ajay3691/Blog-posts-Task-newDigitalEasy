@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import './AdminDashboard.css'; 
+import './AdminDashboard.css';
 import { store } from '../App';
 
 const AdminDashboard = () => {
@@ -11,13 +11,13 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useContext(store);
   const navigate = useNavigate();
-  const postsPerPage = 8;  
+  const postsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUserPosts, setSelectedUserPosts] = useState([]);
   const [hoveredUserId, setHoveredUserId] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null);
-  const [currentUserPage, setCurrentUserPage] = useState(1); 
+  const [currentUserPage, setCurrentUserPage] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,7 +91,7 @@ const AdminDashboard = () => {
 
   const handleUserClick = async (userId) => {
     try {
-      const response = await axios.get(`https://blog-posts-task-new-digital-easy.vercel.app/user/${userId}`, {
+      const response = await axios.get(`https://blog-posts-task-new-digital-easy.vercel.app/post/user/${userId}`, {
         headers: {
           'x-token': token,
         },
@@ -106,7 +106,7 @@ const AdminDashboard = () => {
       }));
 
       setSelectedUserPosts(postsWithUserDetails);
-      setSelectedUserId(userId); 
+      setSelectedUserId(userId);
       setHoveredUserId(userId);
 
       setCurrentUserPage(1);
@@ -114,7 +114,6 @@ const AdminDashboard = () => {
       console.error('Error fetching user posts:', error);
     }
   };
-
 
   const handleUserPagination = (pageNumber) => {
     setCurrentUserPage(pageNumber);
@@ -130,25 +129,27 @@ const AdminDashboard = () => {
         <div className="col-md-2">
           <div>
             <h3>User List:</h3>
-            <input
-              type="text"
-              placeholder="Search by name..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <ul>
-              {filteredUsers.map((user) => (
-                <li
-                  key={user._id}
-                  className="user-list-item"
-                  onClick={() => handleUserClick(user._id)}
-                >
-                  <p>Name: {user.name}</p>
-                </li>
-              ))}
-            </ul>
+            <label htmlFor="userFilter">Filter by user:</label>
+            <div className="search-dropdown-container">
+              <select
+                id="userFilter"
+                value={selectedUserId}
+                onChange={(e) => {
+                  setSelectedUserId(e.target.value);
+                  handleUserClick(e.target.value);
+                }}
+              >
+                <option value="">All Users</option>
+                {filteredUsers.map((user) => (
+                  <option key={user._id} value={user._id}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
+
         <div className="col-md-10">
           <div className="admin-dashboard-title">
             Admin Dashboard
@@ -168,26 +169,34 @@ const AdminDashboard = () => {
               {selectedUserPosts.length > 0 && (
                 <div>
                   <div className="admin-user-details">
-                    <p>User ID: {selectedUserId}</p>
-                    <p>User Name: {selectedUserPosts[0].userDetails.name}</p>
+                    <p className={currentUserPosts.length ? 'user-with-posts' : 'user-without-posts'}>
+                      User ID: {selectedUserId}
+                    </p>
+                    <p className={currentUserPosts.length ? 'user-with-posts' : 'user-without-posts'}>
+                      User Name: {selectedUserPosts[0].userDetails.name}
+                    </p>
                   </div>
                   <div className="admin-posts-container">
-                    {currentUserPosts.map((post, index) => (
-                      <div key={post._id} className={`admin-post-card ${index % 2 === 0 ? 'even-post' : 'odd-post'}`}>
-                        <div className="admin-post-details">
-                          <h3 className="admin-post-title">{post.title}</h3>
-                          <p className="admin-post-description">{post.description}</p>
-                          <p className="admin-post-info">Posted by: {post.userDetails ? post.userDetails.name : 'Unknown User'}</p>
-                          <p className="admin-post-info">Posted on: {new Date(post.postedDate).toLocaleString()}</p>
-                          <div className="admin-post-actions">
-                            <FaEdit onClick={() => handleEdit(post._id)} className="edit-icon" />
-                            <FaTrash onClick={() => handleDelete(post._id)} className="delete-icon" />
+                    {currentUserPosts.length > 0 ? (
+                      currentUserPosts.map((post, index) => (
+                        <div key={post._id} className={`admin-post-card ${index % 2 === 0 ? 'even-post' : 'odd-post'}`}>
+                          <div className="admin-post-details">
+                            <h3 className="admin-post-title">{post.title}</h3>
+                            <p className="admin-post-description">{post.description}</p>
+                            <p className="admin-post-info">Posted by: {post.userDetails ? post.userDetails.name : 'Unknown User'}</p>
+                            <p className="admin-post-info">Posted on: {new Date(post.postedDate).toLocaleString()}</p>
+                            <div className="admin-post-actions">
+                              <FaEdit onClick={() => handleEdit(post._id)} className="edit-icon" />
+                              <FaTrash onClick={() => handleDelete(post._id)} className="delete-icon" />
+                            </div>
                           </div>
+                          <img src={post.image} alt={post.title} className="admin-post-image" />
+                          <hr className="admin-post-divider" />
                         </div>
-                        <img src={post.image} alt={post.title} className="admin-post-image" />
-                        <hr className="admin-post-divider" />
-                      </div>
-                    ))}
+                      ))
+                    ) : (
+                      <p className="bg-danger">This user has not created any posts.</p>
+                    )}
                     {selectedUserPosts.length > 0 && (
                       <div className="admin-pagination-container">
                         <ul className="pagination">
@@ -208,22 +217,26 @@ const AdminDashboard = () => {
               )}
               {!selectedUserPosts.length && (
                 <div>
-                  {currentPosts.map((post, index) => (
-                    <div key={post._id} className={`admin-post-card ${index % 2 === 0 ? 'even-post' : 'odd-post'}`}>
-                      <div className="admin-post-details">
-                        <h3 className="admin-post-title">{post.title}</h3>
-                        <p className="admin-post-description">{post.description}</p>
-                        <p className="admin-post-info">Posted by: {post.userDetails ? post.userDetails.name : 'Unknown User'}</p>
-                        <p className="admin-post-info">Posted on: {new Date(post.postedDate).toLocaleString()}</p>
-                        <div className="admin-post-actions">
-                          <FaEdit onClick={() => handleEdit(post._id)} className="edit-icon" />
-                          <FaTrash onClick={() => handleDelete(post._id)} className="delete-icon" />
+                  {currentPosts.length > 0 ? (
+                    currentPosts.map((post, index) => (
+                      <div key={post._id} className={`admin-post-card ${index % 2 === 0 ? 'even-post' : 'odd-post'}`}>
+                        <div className="admin-post-details">
+                          <h3 className="admin-post-title">{post.title}</h3>
+                          <p className="admin-post-description">{post.description}</p>
+                          <p className="admin-post-info">Posted by: {post.userDetails ? post.userDetails.name : 'Unknown User'}</p>
+                          <p className="admin-post-info">Posted on: {new Date(post.postedDate).toLocaleString()}</p>
+                          <div className="admin-post-actions">
+                            <FaEdit onClick={() => handleEdit(post._id)} className="edit-icon" />
+                            <FaTrash onClick={() => handleDelete(post._id)} className="delete-icon" />
+                          </div>
                         </div>
+                        <img src={post.image} alt={post.title} className="admin-post-image" />
+                        <hr className="admin-post-divider" />
                       </div>
-                      <img src={post.image} alt={post.title} className="admin-post-image" />
-                      <hr className="admin-post-divider" />
-                    </div>
-                  ))}
+                    ))
+                  ) : (
+                    <p className="user-without-posts">No posts available.</p>
+                  )}
                   <div className="admin-pagination-container">
                     <ul className="pagination">
                       {Array(Math.ceil(posts.length / postsPerPage))
